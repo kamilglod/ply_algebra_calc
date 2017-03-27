@@ -4,11 +4,14 @@ from .interpreter import BaseInterpreter
 from .constants import TOKENS, PRECEDENCE
 
 
-def run_session():
+def get_parser(**kwargs):
     lexer = Lexer(TOKENS)
     interpreter = BaseInterpreter()
-    parser = Parser(PRECEDENCE, lexer, interpreter)
+    return Parser(PRECEDENCE, lexer, interpreter, **kwargs)
 
+
+def run_session():
+    parser = get_parser()
     while True:
         try:
             s = input('>>')

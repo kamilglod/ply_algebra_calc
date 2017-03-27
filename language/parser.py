@@ -3,11 +3,12 @@ from ply import yacc
 
 class BaseParser(object):
 
-    def __init__(self, precedence, lexer, interpreter, **kwargs):
+    def __init__(self, precedence, lexer, interpreter, expose_result_func=None, **kwargs):
         self.lexer = lexer
         self.precedence = precedence
         self.interpreter = interpreter
         self.tokens = self.lexer.tokens
+        self.expose_result_func = expose_result_func or print
 
         self.parser = yacc.yacc(module=self)
 
@@ -23,7 +24,7 @@ class Parser(BaseParser):
              | var_assign
              | empty
         '''
-        print(self.interpreter(p[1]))
+        self.expose_result_func(self.interpreter(p[1]))
 
     def p_var_assign(self, p):
         '''
