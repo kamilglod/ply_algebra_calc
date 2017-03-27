@@ -15,5 +15,4 @@ TOKENS = [t for t in dir(OPERATORS) if not t.startswith('__')]
 PRECEDENCE = (
     ('left', OPERATORS.PLUS, OPERATORS.MINUS),
     ('left', OPERATORS.MULTIPLY, OPERATORS.DIVIDE),
-    # ('left', OPERATORS.SQUARE)
 )

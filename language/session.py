@@ -1,11 +1,10 @@
-#!/usr/bin/env python
-from language.lexer import Lexer
-from language.parser import Parser
-from language.interpreter import BaseInterpreter
-from language.constants import TOKENS, PRECEDENCE
+from .lexer import Lexer
+from .parser import Parser
+from .interpreter import BaseInterpreter
+from .constants import TOKENS, PRECEDENCE
 
 
-if __name__ == '__main__':
+def run_session():
     lexer = Lexer(TOKENS)
     interpreter = BaseInterpreter()
     parser = Parser(PRECEDENCE, lexer, interpreter)
