@@ -1,4 +1,5 @@
 import math
+import numpy as np
 from decimal import Decimal
 
 
@@ -41,3 +42,6 @@ class Interpreter(BaseInterpreter):
         math_function = getattr(math, p[1])
         result = math_function(*[self(arg) for arg in p[2]])
         return Decimal(result)
+
+    def ARRAY(self, p):
+        return np.array([self(arg) for arg in p[1]])

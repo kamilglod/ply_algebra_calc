@@ -1,3 +1,4 @@
+import numpy as np
 from decimal import Decimal
 
 
@@ -99,3 +100,24 @@ def test_all_features_at_once(session):
     session.parser.parse('(test_a1 - 2 + (((4+2)*6) - 3) + (pow(4, 1+2) * test_B2))/2')
 
     assert session.last == 180.5
+
+
+def test_array(session):
+    session.parser.parse('[1, 2, 4]')
+
+    assert (session.last == np.array([Decimal(1), Decimal(2), Decimal(4)])).all()
+
+
+def test_matrix(session):
+    session.parser.parse('[[1, 2], [3, 4]]')
+
+    assert (session.last == np.matrix([
+        [Decimal(1), Decimal(2)],
+        [Decimal(3), Decimal(4)],
+    ])).all()
+
+
+def test_multiply_array(session):
+    session.parser.parse('[1, 2, 4] * 2')
+
+    assert (session.last == np.array([Decimal(2), Decimal(4), Decimal(8)])).all()

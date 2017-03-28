@@ -30,13 +30,19 @@ class Parser(BaseParser):
 
     def p_func_call(self, p):
         '''
-        expression : NAME OPENING_BRACKET arguments_list CLOSING_BRACKET
+        expression : NAME LBRACKET arguments_list RBRACKET
         '''
         p[0] = (constants.FUNC_CALL, p[1], p[3])
 
+    def p_array(self, p):
+        '''
+        expression : LSQUARE_BRACKET arguments_list RSQUARE_BRACKET
+        '''
+        p[0] = (constants.ARRAY, p[2])
+
     def p_arguments_list(self, p):
         '''
-        arguments_list : arguments_list ARGUMENTS_SEPARATOR expression
+        arguments_list : arguments_list COMMA expression
                        | expression
         '''
         if len(p) == 4:
@@ -53,7 +59,7 @@ class Parser(BaseParser):
 
     def p_bracket(self, p):
         '''
-        expression : OPENING_BRACKET expression CLOSING_BRACKET
+        expression : LBRACKET expression RBRACKET
         '''
         p[0] = p[2]
 
