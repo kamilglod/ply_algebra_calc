@@ -28,6 +28,12 @@ class Parser(BaseParser):
         '''
         self.expose_result_func(self.interpreter(p[1]))
 
+    def p_func_call(self, p):
+        '''
+        expression : NAME OPENING_BRACKET expression CLOSING_BRACKET
+        '''
+        p[0] = (constants.FUNC_CALL, p[1], p[3])
+
     def p_var_assign(self, p):
         '''
         var_assign : NAME ASSIGN expression

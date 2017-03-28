@@ -73,3 +73,9 @@ def test_floating_point(session):
     session.parser.parse('0.1 + 0.2')
 
     assert session.last == Decimal('0.3')
+
+
+def test_sqrt(session):
+    session.parser.parse('sqrt(16)')
+
+    assert session.last == 4

@@ -25,17 +25,13 @@ class Lexer(BaseLexer):
     t_ASSIGN = r'\='
     t_OPENING_BRACKET = r'\('
     t_CLOSING_BRACKET = r'\)'
+    t_NAME = r'[a-zA-Z_][a-zA-Z_0-9]*'
 
     t_ignore = r' '
 
     def t_NUMBER(self, t):
         r'\d+(\.\d+)?'
         t.value = Decimal(t.value)
-        return t
-
-    def t_NAME(self, t):
-        r'[a-zA-z_][a-zA-Z_0-9]*'
-        t.type = 'NAME'
         return t
 
     def t_error(self, t):

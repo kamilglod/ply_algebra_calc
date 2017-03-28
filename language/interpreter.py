@@ -1,3 +1,5 @@
+import math
+
 
 class BaseInterpreter(object):
 
@@ -33,3 +35,6 @@ class Interpreter(BaseInterpreter):
             return self.variables[p[1]]
         except KeyError:
             return 'Undeclared variable found'
+
+    def FUNC_CALL(self, p):
+        return getattr(math, p[1])(self(p[2]))
