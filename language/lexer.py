@@ -1,4 +1,5 @@
 from ply import lex
+from decimal import Decimal
 
 
 class BaseLexer(object):
@@ -22,17 +23,14 @@ class Lexer(BaseLexer):
     t_MULTIPLY = r'\*'
     t_DIVIDE = r'\/'
     t_ASSIGN = r'\='
+    t_OPENING_BRACKET = r'\('
+    t_CLOSING_BRACKET = r'\)'
 
     t_ignore = r' '
 
-    def t_FLOAT(self, t):
-        r'\d+\.\d+'
-        t.value = float(t.value)
-        return t
-
-    def t_INT(self, t):
-        r'\d+'
-        t.value = int(t.value)
+    def t_NUMBER(self, t):
+        r'\d+(\.\d+)?'
+        t.value = Decimal(t.value)
         return t
 
     def t_NAME(self, t):

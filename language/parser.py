@@ -34,6 +34,12 @@ class Parser(BaseParser):
         '''
         p[0] = (constants.ASSIGN, p[1], p[3])
 
+    def p_bracket(self, p):
+        '''
+        expression : OPENING_BRACKET expression CLOSING_BRACKET
+        '''
+        p[0] = p[2]
+
     def p_expression_divide(self, p):
         '''
         expression : expression DIVIDE expression
@@ -58,10 +64,9 @@ class Parser(BaseParser):
         '''
         p[0] = (constants.MINUS, p[1], p[3])
 
-    def p_expression_int_float(self, p):
+    def p_expression_number(self, p):
         '''
-        expression : INT
-                   | FLOAT
+        expression : NUMBER
         '''
         p[0] = p[1]
 
