@@ -25,9 +25,9 @@ class Lexer(BaseLexer):
     t_ASSIGN = r'\='
     t_OPENING_BRACKET = r'\('
     t_CLOSING_BRACKET = r'\)'
-    t_NAME = r'[a-zA-Z_][a-zA-Z_0-9]*'
+    t_NAME = r'\w[\w0-9]*'
 
-    t_ignore = r' '
+    t_ignore = ' \t\n'
 
     def t_NUMBER(self, t):
         r'\d+(\.\d+)?'

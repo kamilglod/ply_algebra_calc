@@ -46,29 +46,20 @@ class Parser(BaseParser):
         '''
         p[0] = p[2]
 
-    def p_expression_divide(self, p):
-        '''
-        expression : expression DIVIDE expression
-        '''
-        p[0] = (constants.DIVIDE, p[1], p[3])
-
-    def p_expression_multiply(self, p):
-        '''
-        expression : expression MULTIPLY expression
-        '''
-        p[0] = (constants.MULTIPLY, p[1], p[3])
-
-    def p_expression_plus(self, p):
+    def p_operator(self, p):
         '''
         expression : expression PLUS expression
+                   | expression MINUS expression
+                   | expression DIVIDE expression
+                   | expression MULTIPLY expression
         '''
-        p[0] = (constants.PLUS, p[1], p[3])
-
-    def p_expression_minus(self, p):
-        '''
-        expression : expression MINUS expression
-        '''
-        p[0] = (constants.MINUS, p[1], p[3])
+        operators_map = {
+            '+': constants.PLUS,
+            '-': constants.MINUS,
+            '*': constants.MULTIPLY,
+            '/': constants.DIVIDE,
+        }
+        p[0] = (operators_map[p[2]], p[1], p[3])
 
     def p_expression_number(self, p):
         '''
