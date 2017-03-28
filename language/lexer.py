@@ -25,6 +25,7 @@ class Lexer(BaseLexer):
     t_ASSIGN = r'\='
     t_OPENING_BRACKET = r'\('
     t_CLOSING_BRACKET = r'\)'
+    t_ARGUMENTS_SEPARATOR = r'\s*,\s*'
     t_NAME = r'\w[\w0-9]*'
 
     t_ignore = ' \t\n'

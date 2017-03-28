@@ -75,7 +75,27 @@ def test_floating_point(session):
     assert session.last == Decimal('0.3')
 
 
-def test_sqrt(session):
+def test_call_func(session):
     session.parser.parse('sqrt(16)')
 
     assert session.last == 4
+
+
+def test_call_func_with_multiple_arguments(session):
+    session.parser.parse('pow(4, 2)')
+
+    assert session.last == 16
+
+
+def test_call_func_with_expression(session):
+    session.parser.parse('pow(4, 1+2)')
+
+    assert session.last == 64
+
+
+def test_all_features_at_once(session):
+    session.parser.parse('test_a1 = 10')
+    session.parser.parse('test_B2 = 5')
+    session.parser.parse('(test_a1 - 2 + (((4+2)*6) - 3) + (pow(4, 1+2) * test_B2))/2')
+
+    assert session.last == 180.5

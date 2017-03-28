@@ -1,4 +1,5 @@
 import math
+from decimal import Decimal
 
 
 class BaseInterpreter(object):
@@ -37,4 +38,6 @@ class Interpreter(BaseInterpreter):
             return 'Undeclared variable found'
 
     def FUNC_CALL(self, p):
-        return getattr(math, p[1])(self(p[2]))
+        math_function = getattr(math, p[1])
+        result = math_function(*[self(arg) for arg in p[2]])
+        return Decimal(result)

@@ -30,9 +30,20 @@ class Parser(BaseParser):
 
     def p_func_call(self, p):
         '''
-        expression : NAME OPENING_BRACKET expression CLOSING_BRACKET
+        expression : NAME OPENING_BRACKET arguments_list CLOSING_BRACKET
         '''
         p[0] = (constants.FUNC_CALL, p[1], p[3])
+
+    def p_arguments_list(self, p):
+        '''
+        arguments_list : arguments_list ARGUMENTS_SEPARATOR expression
+                       | expression
+        '''
+        if len(p) == 4:
+            p[0] = p[1]
+            p[0].append(p[3])
+        else:
+            p[0] = [p[1]]
 
     def p_var_assign(self, p):
         '''
