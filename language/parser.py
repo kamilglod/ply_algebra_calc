@@ -1,5 +1,7 @@
 from ply import yacc
 
+from . import constants
+
 
 class BaseParser(object):
 
@@ -28,18 +30,33 @@ class Parser(BaseParser):
 
     def p_var_assign(self, p):
         '''
-        var_assign : NAME EQUALS expression
+        var_assign : NAME ASSIGN expression
         '''
-        p[0] = ('=', p[1], p[3])
+        p[0] = (constants.ASSIGN, p[1], p[3])
 
-    def p_expression(self, p):
+    def p_expression_divide(self, p):
+        '''
+        expression : expression DIVIDE expression
+        '''
+        p[0] = (constants.DIVIDE, p[1], p[3])
+
+    def p_expression_multiply(self, p):
         '''
         expression : expression MULTIPLY expression
-                   | expression DIVIDE expression
-                   | expression PLUS expression
-                   | expression MINUS expression
         '''
-        p[0] = (p[2], p[1], p[3])
+        p[0] = (constants.MULTIPLY, p[1], p[3])
+
+    def p_expression_plus(self, p):
+        '''
+        expression : expression PLUS expression
+        '''
+        p[0] = (constants.PLUS, p[1], p[3])
+
+    def p_expression_minus(self, p):
+        '''
+        expression : expression MINUS expression
+        '''
+        p[0] = (constants.MINUS, p[1], p[3])
 
     def p_expression_int_float(self, p):
         '''
@@ -52,7 +69,7 @@ class Parser(BaseParser):
         '''
         expression : NAME
         '''
-        p[0] = ('var', p[1])
+        p[0] = (constants.VAR_FETCH, p[1])
 
     def p_error(self, p):
         print("Syntax error found")

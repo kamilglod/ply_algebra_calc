@@ -39,3 +39,17 @@ def test_omit_whitespaces(session):
     session.parser.parse('4 +   2\n*5 /\t2')
 
     assert session.last == 9
+
+
+def test_assign_variable(session):
+    session.parser.parse('a=3')
+    session.parser.parse('a')
+
+    assert session.last == 3
+
+
+def test_use_variable(session):
+    session.parser.parse('a=3')
+    session.parser.parse('a+2')
+
+    assert session.last == 5

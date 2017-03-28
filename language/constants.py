@@ -1,18 +1,25 @@
 
-class OPERATORS(object):
+INT = 'INT'
+FLOAT = 'FLOAT'
+NAME = 'NAME'
+PLUS = 'PLUS'
+MINUS = 'MINUS'
+DIVIDE = 'DIVIDE'
+MULTIPLY = 'MULTIPLY'
+ASSIGN = 'ASSIGN'
+VAR_FETCH = 'VAR_FETCH'
 
-    INT = 'INT'
-    FLOAT = 'FLOAT'
-    NAME = 'NAME'
-    PLUS = 'PLUS'
-    MINUS = 'MINUS'
-    DIVIDE = 'DIVIDE'
-    MULTIPLY = 'MULTIPLY'
-    EQUALS = 'EQUALS'
-
-
-TOKENS = [t for t in dir(OPERATORS) if not t.startswith('__')]
+TOKENS = [
+    INT,
+    FLOAT,
+    NAME,
+    PLUS,
+    MINUS,
+    DIVIDE,
+    MULTIPLY,
+    ASSIGN,
+]
 PRECEDENCE = (
-    ('left', OPERATORS.PLUS, OPERATORS.MINUS),
-    ('left', OPERATORS.MULTIPLY, OPERATORS.DIVIDE),
+    ('left', PLUS, MINUS),
+    ('left', MULTIPLY, DIVIDE),
 )

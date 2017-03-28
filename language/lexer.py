@@ -21,7 +21,7 @@ class Lexer(BaseLexer):
     t_MINUS = r'\-'
     t_MULTIPLY = r'\*'
     t_DIVIDE = r'\/'
-    t_EQUALS = r'\='
+    t_ASSIGN = r'\='
 
     t_ignore = r' '
 
