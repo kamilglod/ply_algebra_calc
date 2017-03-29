@@ -6,7 +6,10 @@ from decimal import Decimal
 class BaseInterpreter(object):
 
     def __init__(self):
-        self.variables = {}
+        self.variables = {
+            'pi': Decimal(math.pi),
+            'e': Decimal(math.e),
+        }
 
     def __call__(self, p):
         if type(p) == tuple:

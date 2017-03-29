@@ -10,9 +10,13 @@ class BaseParser(object):
         self.precedence = precedence
         self.interpreter = interpreter
         self.tokens = self.lexer.tokens
-        self.expose_result_func = expose_result_func or print
+        self.expose_result_func = expose_result_func or self.default_expose_result
 
         self.parser = yacc.yacc(module=self)
+
+    def default_expose_result(self, result):
+        if result is not None:
+            print(result)
 
     def parse(self, *args, **kwargs):
         return self.parser.parse(*args, **kwargs)

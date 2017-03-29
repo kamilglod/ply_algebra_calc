@@ -8,13 +8,3 @@ def get_parser(**kwargs):
     lexer = Lexer(TOKENS)
     interpreter = Interpreter()
     return Parser(PRECEDENCE, lexer, interpreter, **kwargs)
-
-
-def run_session():
-    parser = get_parser()
-    while True:
-        try:
-            s = input('>>')
-        except EOFError:
-            break
-        parser.parse(s)
