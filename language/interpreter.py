@@ -20,6 +20,10 @@ class BaseInterpreter(object):
 
 class Interpreter(BaseInterpreter):
 
+    def __init__(self):
+        super().__init__()
+        np.set_printoptions(formatter={'all': lambda x: str(x)})
+
     def PLUS(self, p):
         return self(p[1]) + self(p[2])
 
