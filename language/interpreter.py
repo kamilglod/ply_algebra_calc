@@ -1,13 +1,16 @@
 import math
 import numpy as np
-from decimal import Decimal
+from decimal import Decimal, DivisionByZero
+
+from .exceptions import InterpreterError
+from . import constants
 
 
 class BaseInterpreter(object):
 
     def __init__(self):
         self.variables = {
-            'pi': Decimal(math.pi),
+            'PI': Decimal(math.pi),
             'e': Decimal(math.e),
         }
 
@@ -34,16 +37,20 @@ class Interpreter(BaseInterpreter):
         return self(p[1]) * self(p[2])
 
     def DIVIDE(self, p):
-        return self(p[1]) / self(p[2])
+        try:
+            return self(p[1]) / self(p[2])
+        except DivisionByZero:
+            raise InterpreterError('Division by zero.')
 
     def ASSIGN(self, p):
         self.variables[p[1]] = self(p[2])
 
     def VAR_FETCH(self, p):
+        key = p[1]
         try:
-            return self.variables[p[1]]
+            return self.variables[key]
         except KeyError:
-            return 'Undeclared variable found'
+            raise InterpreterError('"{}" is undefined.'.format(key))
 
     def FUNC_CALL(self, p):
         math_function = getattr(math, p[1])
@@ -52,3 +59,21 @@ class Interpreter(BaseInterpreter):
 
     def ARRAY(self, p):
         return np.array([self(arg) for arg in p[1]])
+
+    def ARRAY_EXPRESSION(self, p):
+        operators_map = {
+            constants.PLUS: lambda a, b: self(a) + self(b),
+            constants.MULTIPLY: lambda a, b: self(a) * self(b),
+        }
+        return operators_map[p[2]](p[1], p[3])
+
+    def MATRIX(self, p):
+        return np.matrix([self(arg) for arg in p[1]])
+
+    def MATRIX_EXPRESSION(self, p):
+        operators_map = {
+            constants.PLUS: lambda a, b: self(a) + self(b),
+            constants.MULTIPLY: lambda a, b: np.array(self(a)) * np.array(self(b)),
+            constants.MATRIX_MULTIPLY: lambda a, b: np.dot(self(a), self(b)),
+        }
+        return operators_map[p[2]](p[1], p[3])

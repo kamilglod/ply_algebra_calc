@@ -22,12 +22,13 @@ class Lexer(BaseLexer):
     t_MINUS = r'\-'
     t_MULTIPLY = r'\*'
     t_DIVIDE = r'\/'
+    t_MATRIX_MULTIPLY = r'\.\*'
     t_ASSIGN = r'\='
     t_LBRACKET = r'\('
     t_RBRACKET = r'\)'
     t_LSQUARE_BRACKET = r'\['
     t_RSQUARE_BRACKET = r'\]'
-    t_COMMA = r'\s*,\s*'
+    t_COMMA = r','
     t_NAME = r'\w[\w0-9]*'
 
     t_ignore = ' \t\n'
@@ -38,5 +39,5 @@ class Lexer(BaseLexer):
         return t
 
     def t_error(self, t):
-        print("Illegal characters!")
+        print('Illegal characters!')
         t.lexer.skip(1)
